@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,9 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
+Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::get('/subscribe', [DashboardController::class, 'subscribe'])->name('subscribe');
+    Route::post('/subscribe', [DashboardController::class, 'post'])->name('post-subscribe');;
+});
